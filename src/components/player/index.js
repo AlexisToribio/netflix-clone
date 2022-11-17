@@ -32,7 +32,7 @@ Player.Video = function PlayerVideo({ src, ...restProps }) {
 };
 
 Player.Button = function PlayerButton({ ...restProps }) {
-  const { setShowPlayer } = useContext(PlayerContext);
+  const { showPlayer, setShowPlayer } = useContext(PlayerContext); // eslint-disable-line
 
   return (
     <Button
