@@ -125,6 +125,10 @@ export function BrowseContainer({ slides }) {
       <FooterContainer />
     </>
   ) : (
-    <SelectProfileContainer user={user} setProfile={setProfile} />
+    <SelectProfileContainer
+      data-testid="select-profile"
+      user={user}
+      setProfile={setProfile}
+    />
   );
 }
