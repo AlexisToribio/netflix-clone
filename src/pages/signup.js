@@ -6,7 +6,7 @@ import { HeaderContainer } from "../containers/header";
 import { Form } from "../components";
 import * as ROUTES from "../constants/routes";
 
-export default function Signup() {
+export default function SignUp() {
   const history = useHistory();
   const { firebase } = useContext(FirebaseContext);
 
@@ -17,7 +17,7 @@ export default function Signup() {
 
   const isInvalid = firstName === "" || password === "" || emailAddress === "";
 
-  const handleSignup = (event) => {
+  const handleSignUp = event => {
     event.preventDefault();
 
     // do firebase stuff
@@ -25,7 +25,7 @@ export default function Signup() {
     firebase
       .auth()
       .createUserWithEmailAndPassword(emailAddress, password)
-      .then((result) =>
+      .then(result =>
         result.user
           .updateProfile({
             displayName: firstName,
@@ -35,7 +35,7 @@ export default function Signup() {
             history.push(ROUTES.BROWSE);
           })
       )
-      .catch((error) => {
+      .catch(error => {
         setFirstName("");
         setEmailAddress("");
         setPassword("");
@@ -48,9 +48,9 @@ export default function Signup() {
         <Form>
           <Form.Title>Sign Up</Form.Title>
           {error && <Form.Error>{error}</Form.Error>}
-          <Form.Base onSubmit={handleSignup} methed="POST">
+          <Form.Base onSubmit={handleSignUp} methed="POST">
             <Form.Input
-              placeholder="First Name"
+              placeholder="First name"
               value={firstName}
               onChange={({ target }) => setFirstName(target.value)}
             />
@@ -66,7 +66,11 @@ export default function Signup() {
               autocomplete="off"
               onChange={({ target }) => setPassword(target.value)}
             />
-            <Form.Submit disabled={isInvalid} type="submit">
+            <Form.Submit
+              data-testid="sign-up"
+              disabled={isInvalid}
+              type="submit"
+            >
               Sign Up
             </Form.Submit>
 

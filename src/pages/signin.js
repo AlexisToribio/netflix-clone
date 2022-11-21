@@ -6,7 +6,7 @@ import { HeaderContainer } from "../containers/header";
 import { Form } from "../components";
 import * as ROUTES from "../constants/routes";
 
-export default function Signin() {
+export default function SignIn() {
   const history = useHistory();
   const { firebase } = useContext(FirebaseContext);
   const [emailAddress, setEmailAddress] = useState("");
@@ -14,11 +14,11 @@ export default function Signin() {
   const [error, setError] = useState("");
 
   const isInvalid = password === "" || emailAddress === "";
-  const handleSignIn = (event) => {
+
+  const handleSignIn = event => {
     event.preventDefault();
 
     // firebase work here
-
     firebase
       .auth()
       .signInWithEmailAndPassword(emailAddress, password)
@@ -26,7 +26,7 @@ export default function Signin() {
         // push to the browse page
         history.push(ROUTES.BROWSE);
       })
-      .catch((error) => {
+      .catch(error => {
         setEmailAddress("");
         setPassword("");
         setError(error.message);
@@ -37,7 +37,7 @@ export default function Signin() {
       <HeaderContainer>
         <Form>
           <Form.Title>Sign In</Form.Title>
-          {error && <Form.Error>{error}</Form.Error>}
+          {error && <Form.Error data-testid="error">{error}</Form.Error>}
 
           <Form.Base onSubmit={handleSignIn} method="POST">
             <Form.Input
@@ -52,7 +52,11 @@ export default function Signin() {
               value={password}
               onChange={({ target }) => setPassword(target.value)}
             />
-            <Form.Submit disabled={isInvalid} type="submit">
+            <Form.Submit
+              data-testid="sign-in"
+              disabled={isInvalid}
+              type="submit"
+            >
               Sign In
             </Form.Submit>
           </Form.Base>
